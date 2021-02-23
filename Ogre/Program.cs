@@ -10,18 +10,23 @@ namespace Ogre
         {
             List<Ogre> listOgre = new List<Ogre>();
 
-            for(int i=0; i <1; i++)
+            for(int i=0; i <3; i++)
             {
                 listOgre.Add(new Ogre());
 
                 Thread Ogre1 = new Thread(listOgre[i].mangerOgre);
                 Ogre1.Start();                
-                Thread Ogre2 = new Thread(listOgre[i].mangerOgre);
-                Ogre2.Start();
-                Thread Ogre3 = new Thread(listOgre[i].mangerOgre);
-                Ogre3.Start();
             }
             Console.WriteLine("Ogre créer");
+            AfficherTable();
+        }
+
+        static public void AfficherTable()
+        {
+            ModelesBD.PlatBDContext contexte = new ModelesBD.PlatBDContext();
+
+            foreach (ModelesBD.Plat plat in contexte.Plats)
+                Console.WriteLine("Plat : " + plat);
         }
     }
 }
