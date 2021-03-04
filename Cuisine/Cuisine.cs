@@ -23,7 +23,7 @@ namespace Cuisine
             while (!full)
             {
                 Thread.Sleep(1000);
-                CreePlat(random.Next(1, 4));
+                CreePlat(random.Next(1, 10));
 
                 if (nbrPlat == 10)
                     full = true;
@@ -40,30 +40,18 @@ namespace Cuisine
         {
             int valeur = (int)(-1 * 5 * Math.Log(1 - rnd.NextDouble()));
             Contexte contexte = new Contexte();
-            switch (choix)
-            {
-                case 1:
-                    Plat platCochon = new Plat
-                    {
-                        TypePlat = "Cochon",
-                        NbrBouchee = valeur
-                    };
-                    contexte.Plats.Add(platCochon); contexte.SaveChanges(); break;
-                case 2:
-                    Plat platVache = new Plat
-                    {
-                        TypePlat = "Vache",
-                        NbrBouchee = valeur
-                    };
-                    contexte.Plats.Add(platVache); contexte.SaveChanges(); break;
-                case 3:
-                    Plat platPoulet = new Plat
-                    {
-                        TypePlat = "Poulet",
-                        NbrBouchee = valeur
-                    };
-                    contexte.Plats.Add(platPoulet); contexte.SaveChanges(); break;
-            }
+            Plat p = new Plat();
+            if (choix > 1 && choix < 6)
+                p.TypePlat = "Carnivore";
+            else if (choix == 1)
+                p.TypePlat = "Sucrerie";
+            else
+                p.TypePlat = "Végéterien";
+
+            p.NbrBouchee = valeur;
+            contexte.Plats.Add(p);
+            contexte.SaveChanges();
+                     
         }
 
         public void AfficherTable()
