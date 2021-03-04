@@ -10,12 +10,19 @@ namespace Ogre
         {
             List<Ogre> listOgre = new List<Ogre>();
 
-            for(int i=0; i <3; i++)
-            {
-                listOgre.Add(new Ogre());
+            Ogre ours = new Ours();
+            listOgre.Add(ours);
+            Ogre loup = new Loup();
+            listOgre.Add(loup);
+            Ogre daim = new Daim();
+            listOgre.Add(daim);
+            Ogre serpent = new Serpent();
+            listOgre.Add(serpent);
 
-                Thread Ogre1 = new Thread(listOgre[i].mangerOgre);
-                Ogre1.Start();                
+            for (int i = 0; i < listOgre.Count; i++)
+            {
+                Thread ogre = new Thread(listOgre[i].mangerOgre);
+                ogre.Start();
             }
             Console.WriteLine("Ogre créer");
             AfficherTable();

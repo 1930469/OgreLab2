@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading; 
+using System.Threading;
 
 namespace Ogre
 {
@@ -12,44 +12,49 @@ namespace Ogre
         // Variables 
         private static readonly object verrou = new object();
         public int PlatManger { get; set; }
-        public string regime { get; set; }
+        public string Nom { get; set; }
 
-        
-
-        // Constructeur
+        // Constructeur 
         public Ogre()
         {
             int PlatManger = 0;
+            Nom = "Shrek";
         }
-        
+
         // Fonctions
-        public Plat SelectPlat()
+        public virtual Plat SelectPlat()
         {
             ModelesBD.Plat plat = null;
             ModelesBD.PlatBDContext contexte = new ModelesBD.PlatBDContext();
             try
             {
                 // Selectionne puis mange le plat
-                lock(verrou)
-				{
-                    plat = contexte.Plats.FirstOrDefault();
-                    if(plat != null)
+                lock (verrou)
+                {
+                    plat = TrierPlat(contexte.Plats);
+
+                    if (plat != null)
                         contexte.Plats.Remove(plat);
 
                     contexte.SaveChanges();
-                }                
+                }
                 Thread.Sleep(2000);
-                foreach(Plat assietes in contexte.Plats)
-                    Console.WriteLine("Plat : " + assietes);
+
+                //foreach(Plat assietes in contexte.Plats)
+                //Console.WriteLine("Plat : " + assietes);
 
             }
-            catch(Exception e)
-            {                
+            catch (Exception e)
+            {
                 Console.WriteLine("Erreur : \n" + e);
             }
-            Thread.Sleep(2000); // A changer
-
+            Thread.Sleep(2000);
             return plat;
+        }
+
+        public virtual Plat TrierPlat(IEnumerable<Plat> plats)
+        {
+            return plats.FirstOrDefault();
         }
 
         // C'est ici que l'Ogre mange son plat et attends son prochain repas
@@ -57,11 +62,11 @@ namespace Ogre
         {
             while (PlatManger < 100)
             {
-                Plat plat = SelectPlat();          
-                PlatManger++;          
-                if(plat != null)
-				{
-                    Console.WriteLine("L'ogre a manger le plat : " + plat.TypePlat);
+                Plat plat = SelectPlat();
+                PlatManger++;
+                if (plat != null)
+                {
+                    Console.WriteLine(Nom + " a manger le plat : " + plat.TypePlat + " (" + plat.NbrBouchee + ")");
                     Thread.Sleep(plat.NbrBouchee * 1000);
                 }
             }

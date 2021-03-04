@@ -6,13 +6,13 @@ using System.Threading;
 
 namespace Cuisine
 {
-	public class Cuisine
-	{
-         private Random rnd = new Random();
+    public class Cuisine
+    {
+        private Random rnd = new Random();
 
         public void Main()
-		{
-            CleanBD();
+        {
+            //CleanBD();
 
             bool full = false;
             Contexte contexte = new Contexte();
@@ -23,7 +23,7 @@ namespace Cuisine
             while (!full)
             {
                 Thread.Sleep(1000);
-                CreePlat(random.Next(1, 10));
+                CreePlat(random.Next(1, 4));
 
                 if (nbrPlat == 10)
                     full = true;
@@ -36,9 +36,10 @@ namespace Cuisine
 
             Console.WriteLine("table : " + nbrPlat + "\n Plat Créer : " + platCreer);
         }
+
         public void CreePlat(int choix)
         {
-            int valeur = (int)(-1 * 5 * Math.Log(1 - rnd.NextDouble()));
+            int valeur = (int)(-1 * 4 * Math.Log(1 - rnd.NextDouble())) + 1;
             Contexte contexte = new Contexte();
             Plat p = new Plat();
             if (choix > 1 && choix < 6)
@@ -51,7 +52,7 @@ namespace Cuisine
             p.NbrBouchee = valeur;
             contexte.Plats.Add(p);
             contexte.SaveChanges();
-                     
+
         }
 
         public void AfficherTable()
