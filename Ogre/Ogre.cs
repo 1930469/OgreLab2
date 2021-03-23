@@ -13,13 +13,15 @@ namespace Ogre
         private static readonly object verrou = new object();
         public int PlatManger { get; set; }
         public string Nom { get; set; }
+        public delegate void Affichage(string Nom, Plat plat);
+        public Affichage afficherPlat;
 
         // Constructeur 
-        public Ogre()
+        public Ogre(Affichage affichePlat)
         {
             int PlatManger = 0;
             Nom = "Shrek";
-        }
+            afficherPlat += affichePlat;        }
 
         // Fonctions
         public virtual Plat SelectPlat()
@@ -52,13 +54,13 @@ namespace Ogre
             return plat;
         }
 
-        public virtual Plat TrierPlat(IEnumerable<Plat> plats)
+        public virtual Plat TrierPlat(IQueryable<Plat> plats)
         {
             return plats.FirstOrDefault();
         }
 
         // C'est ici que l'Ogre mange son plat et attends son prochain repas
-        public void mangerOgre()
+        public void MangerOgre()
         {
             while (PlatManger < 100)
             {
@@ -66,12 +68,12 @@ namespace Ogre
                 PlatManger++;
                 if (plat != null)
                 {
-                    Console.WriteLine(Nom + " a manger le plat : " + plat.TypePlat + " (" + plat.NbrBouchee + ")");
+                    afficherPlat(Nom, plat);
                     Thread.Sleep(plat.NbrBouchee * 1000);
                 }
             }
 
-            Console.WriteLine("Total des plats mangés : " + PlatManger);
+            
         }
     }
 }

@@ -9,12 +9,12 @@ namespace Ogre
 {
     public class Loup : Ogre
     {
-        public Loup()
+        public Loup(Affichage affichePlat) : base(affichePlat)
         {
             Nom = "Croc Blanc";
         }
 
-        public override Plat TrierPlat(IEnumerable<Plat> plats)
+        public override Plat TrierPlat(IQueryable<Plat> plats)
         {
             var queryCarnivore = from p in plats
                                  where (p.TypePlat == "Carnivore")

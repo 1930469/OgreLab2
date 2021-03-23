@@ -9,6 +9,9 @@ namespace Cuisine
     public class Cuisine
     {
         private Random rnd = new Random();
+        const int PalierViande = 1;
+        const int PalierLegume = 6;
+        const int NombreRandom = 4;
 
         public void Main()
         {
@@ -39,12 +42,12 @@ namespace Cuisine
 
         public void CreePlat(int choix)
         {
-            int valeur = (int)(-1 * 4 * Math.Log(1 - rnd.NextDouble())) + 1;
+            int valeur = (int)(-1 * NombreRandom * Math.Log(1 - rnd.NextDouble())) + 1;
             Contexte contexte = new Contexte();
             Plat p = new Plat();
-            if (choix > 1 && choix < 6)
+            if (choix > PalierViande && choix < PalierLegume)
                 p.TypePlat = "Carnivore";
-            else if (choix == 1)
+            else if (choix == PalierViande)
                 p.TypePlat = "Sucrerie";
             else
                 p.TypePlat = "Végéterien";

@@ -8,12 +8,12 @@ namespace Ogre
 {
     public class Daim : Ogre
     {
-        public Daim()
+        public Daim(Affichage affichePlat) : base(affichePlat)
         {
             Nom = "Bambie";
         }
 
-        public override Plat TrierPlat(IEnumerable<Plat> plats)
+        public override Plat TrierPlat(IQueryable<Plat> plats)
         {
             var queryVegetarien = from p in plats
                                   where (p.TypePlat == "Végétarien")
