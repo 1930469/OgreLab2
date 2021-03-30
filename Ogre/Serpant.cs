@@ -8,17 +8,21 @@ namespace Ogre
 {
 	public class Serpent : Ogre
 	{
-		public Serpent(Affichage affichePlat) :base(affichePlat)
+		public Serpent()
 		{
 			Nom = "Kaa";
-			
 		}
-		public override Plat TrierPlat(IQueryable<Plat> plats)
+		public Serpent(Affichage affichePlat) : base(affichePlat)
+		{
+			Nom = "Kaa";
+		}
+
+		// Faire des tests sur la fonction TrierPlat
+		public override Plat TrierPlat(IEnumerable<Plat> plats)
 		{
 			var queryMax = plats.Min(p => p.NbrBouchee);
 			var querySerpant = plats.Where(p => p.NbrBouchee == queryMax).
 				Select(p => p);
-
 
 			return querySerpant.FirstOrDefault();
 		}

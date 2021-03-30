@@ -36,10 +36,10 @@ namespace Ogre
             foreach (ModelesBD.Plat plat in contexte.Plats)
                 Console.WriteLine("Plat : " + plat);
         }
-        static public void AfficherPlat(string Nom,Plat plat)
-        {
-            Console.WriteLine(Nom + " a manger le plat : " + plat.TypePlat + " (" + plat.NbrBouchee + ")");
 
+        static public void AfficherPlat(string nom, Plat plat)
+        {
+            Console.WriteLine(nom + " a manger le plat : " + plat.TypePlat + " (" + plat.NbrBouchee + ")");
         }
     }
 }
