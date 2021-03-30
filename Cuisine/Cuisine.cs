@@ -8,25 +8,26 @@ namespace Cuisine
 {
     public class Cuisine
     {
-        private Random rnd = new Random();
+        public Func<Double> FournisseurDeRandom { get; set; }
         const int PalierViande = 1;
         const int PalierLegume = 6;
         const int NombreRandom = 4;
+        public Contexte contexte = new Contexte();
 
         public void Main()
         {
             //CleanBD();
 
-            bool full = false;
-            Contexte contexte = new Contexte();
+            bool full = false;            
             Random random = new Random();
             int nbrPlat = contexte.Plats.Count();
             int platCreer = 0;
+            FournisseurDeRandom = () => new Random().NextDouble();
 
             while (!full)
             {
                 Thread.Sleep(1000);
-                CreePlat(random.Next(1, 4));
+                CreePlat(random.Next(1, 10));
 
                 if (nbrPlat == 10)
                     full = true;
@@ -42,8 +43,7 @@ namespace Cuisine
 
         public void CreePlat(int choix)
         {
-            int valeur = (int)(-1 * NombreRandom * Math.Log(1 - rnd.NextDouble())) + 1;
-            Contexte contexte = new Contexte();
+            int valeur = ((int)(-1 * 4 * Math.Log(1 - FournisseurDeRandom())) + 1);            
             Plat p = new Plat();
             if (choix > PalierViande && choix < PalierLegume)
                 p.TypePlat = "Carnivore";
@@ -57,6 +57,7 @@ namespace Cuisine
             contexte.SaveChanges();
 
         }
+        
 
         public void AfficherTable()
         {
